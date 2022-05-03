@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "jquery": "^3.6.0",
-    "jqwidgets-framework": "^14.0.0"
+    "jqwidgets-framework": "^14.0.0",
+    "jqwidgets-scripts": "^14.0.0"
   }
 }

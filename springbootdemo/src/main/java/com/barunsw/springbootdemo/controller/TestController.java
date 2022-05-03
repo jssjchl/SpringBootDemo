@@ -26,4 +26,9 @@ public class TestController {
 		logger.debug("name ={}", name);
 		return new ResponseEntity<>(name, HttpStatus.OK);
 	}
+	@GetMapping("/index")
+	public String indesPage() {
+		return "index";
+	}
+	
 }
