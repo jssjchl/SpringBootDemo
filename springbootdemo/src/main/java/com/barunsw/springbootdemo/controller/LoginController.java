@@ -26,6 +26,7 @@ public class LoginController {
 	public String loginPage() {
 		return "login/login";
 	}
+	
 	@PostMapping("/loginCheck")
 	public String loginCheck(UserVo userVo) {
 		log.info(userVo.toString());
@@ -37,6 +38,7 @@ public class LoginController {
 			return "redirect:/login";
 		}
 	}
+	
 	@GetMapping("/signup")
 	public String singupPage() {
 		return "login/signup";
