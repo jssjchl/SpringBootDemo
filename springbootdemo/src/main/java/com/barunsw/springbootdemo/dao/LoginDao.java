@@ -6,5 +6,5 @@ import com.barunsw.springbootdemo.vo.UserVo;
 @Mapper
 public interface LoginDao {
 	UserVo selectUser(UserVo userVo);
-	UserVo insertUser(UserVo userVo);
+	int insertUser(UserVo userVo);
 }

@@ -42,14 +42,14 @@ public class LoginController {
 		return "login/signup";
 	}
 
-	@PostMapping("/")
+	@PostMapping("/signupCheck")
 	public String signUpUser(UserVo userVo) {
-		UserVo userCheck = loginService.loginProcess(userVo);
-		if (userCheck == null) {
-			return "redirect:login";
+		int singupCheck = loginService.signupProccess(userVo);
+		if (singupCheck == 0) {
+			return "redirect:/index";
 		}
 		else {
-			return null;
+			return "redirect:/login";
 		}
 	}
 

@@ -13,7 +13,7 @@ function initEvent() {
 	$('#form').on('validationSuccess', function () {
 		$('#form').submit();
 	});
-	$('#jqxValidator').on('validationError', function () {
+	$('#form').on('validationError', function () {
 		alert("올바르지 않은 작동입니다.");
 	 }); 
 

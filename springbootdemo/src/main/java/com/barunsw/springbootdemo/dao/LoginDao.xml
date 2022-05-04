@@ -18,9 +18,9 @@
 		AND PASSWORD = #{password}
 	</select>
 	
-	<insert id="inserUser" parameterType="com.barunsw.springbootdemo.vo.UserVo">
-	INSET INTO 
+	<insert id="insertUser" parameterType="com.barunsw.springbootdemo.vo.UserVo">
+	INSERT INTO 
 	TB_USER(USERNAME, PASSWORD, PHONE, EMAIL)
-	 VALUES(#(username),#(password),#(phone),#(email))
+	 VALUES(#{username}, #{password}, #{phone}, #{email})
 	</insert>
 </mapper>
