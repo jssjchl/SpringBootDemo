@@ -3,7 +3,7 @@ $(document).ready(function () {
     initEvent();
 });
 
-function ajaxApi(typeVal, urlVal, dataVal, dataSource){
+function ajaxApi(typeVal, urlVal, dataVal, dataSource, sourceData){
 	 			$.ajax({	
                           type: typeVal
                         , url: urlVal
@@ -13,7 +13,7 @@ function ajaxApi(typeVal, urlVal, dataVal, dataSource){
                             alert('FAIL');
                         }
                         , success: function (response) {
-							dataAdapter = new $.jqx.dataAdapter(ordersSource);
+							dataAdapter = new $.jqx.dataAdapter(sourceData);
                    		 	$("#table").jqxDataTable(dataSource, dataAdapter);                        
                    		 }
                     });
@@ -32,29 +32,9 @@ function initComponent() {
         dataType: "json",
         id: 'username',
         url: "/getAllUserList",
-      /*  addRow: function (rowID, rowData, position, commit) {
-            // synchronize with the server - send insert command
-            // call commit with parameter true if the synchronization with the server is successful 
-            // and with parameter false if the synchronization failed.
-            // you can pass additional argument to the commit callback which represents the new ID if it is generated from a DB.
-            commit(true);
-        },
-        updateRow: function (rowID, rowData, commit) {
-            // synchronize with the server - send update command
-            // call commit with parameter true if the synchronization with the server is successful 
-            // and with parameter false if the synchronization failed.
-            commit(true);
-        },
-        deleteRow: function (rowID, commit) {
-            // synchronize with the server - send delete command
-            // call commit with parameter true if the synchronization with the server is successful 
-            // and with parameter false if the synchronization failed.
-            commit(true);
-        }*/
     };
     var dataAdapter = new $.jqx.dataAdapter(ordersSource, {
         loadComplete: function () {
-	
         }
     });
     $("#table").jqxDataTable(
@@ -73,24 +53,20 @@ function initComponent() {
                 $("#save").jqxButton({ height: 30, width: 80 });
                 $("#delete").jqxButton({ height: 30, width: 80 });
                 $("#cancel").jqxButton({ height: 30, width: 80 });
+                
                 $("#cancel").mousedown(function () {
-                    // close jqxWindow.
                     $("#dialog").jqxWindow('close');
                 });
                 
                 $("#delete").mousedown(function(){
-		            var editRow = parseInt($("#dialog").attr('data-row'));
                     var rowData = {
                         username : $("#username").val()
                     }
-                    ajaxApi("delete", "/deleteUser", rowData, 'source');
-                    
+                    ajaxApi("delete", "/deleteUser", rowData, 'source', ordersSource);
                     $("#dialog").jqxWindow('close');
-					$("#table").jqxDataTable('deleteRow', editRow, rowData); 
                 });
 
                 $("#save").mousedown(function () {
-	               	var editRow = parseInt($("#dialog").attr('data-row'));
                     var rowData = {
                         no: $("#no").val(),
                         username: $("#username").val(),
@@ -99,10 +75,8 @@ function initComponent() {
                         address: $("#address").val()
                     };
                     
-                    ajaxApi("POST", "/updateUser", rowData, 'source');
-                    
+                    ajaxApi("POST", "/updateUser", rowData, 'source', ordersSource);
                     $("#dialog").jqxWindow('close');
-					$("#table").jqxDataTable('updateRow', editRow, rowData); 
                 });
 
                 $("#dialog").on('close', function () {
@@ -160,7 +134,6 @@ function initEvent() {
         var args = event.args;
         var index = args.index;
         var row = args.row;
-        // update the widgets inside jqxWindow.
         $("#dialog").jqxWindow('setTitle', "Edit Row: " + row.username);
         $("#dialog").jqxWindow('open');
         $("#dialog").attr('data-row', index);

@@ -29,5 +29,4 @@ public class ViewController {
 		model.addAttribute("callpage", "user/table");
 		return "index";
 	}
-
 }

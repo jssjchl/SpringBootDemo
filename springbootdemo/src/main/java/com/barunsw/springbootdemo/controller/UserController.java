@@ -32,12 +32,14 @@ public class UserController {
 	@PostMapping("/updateUser")
 	public ResponseEntity updateUser(UserVo userVo) {
 		int result = userService.updateUser(userVo);
+		LOGGER.info("uservo ={}", userVo);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deleteUser")
 	public ResponseEntity deleteUser(UserVo userVo) {
 		int result = userService.deleteUser(userVo);
+		LOGGER.info("uservo ={}", userVo);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

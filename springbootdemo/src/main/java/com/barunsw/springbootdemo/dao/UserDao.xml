@@ -7,12 +7,13 @@
 	<select id="selectAllUseList"
 		resultType="com.barunsw.springbootdemo.vo.UserVo"
 		parameterType="com.barunsw.springbootdemo.vo.UserVo">
-		SELECT
-			ROWNUM AS NO,
+		SELECT 
+			@ROWNUM:=@ROWNUM+1 AS no, 
 			A.*
-		FROM
-			(SELECT * FROM TB_USER
-		ORDER BY USERNAME DESC) A;
+		FROM 
+			tb_user A, (SELECT @ROWNUM:=0) AS R
+		order by 
+			A.USERNAME 
 	</select> 
 	
 	<update id = "updateUser"
@@ -20,11 +21,11 @@
 		UPDATE  
 			TB_USER
 		SET
-			PHONE =#{phone},
-			EMAIL =#{email},
-			ADDRESS =#{address}
-		WHERE
-			USERNAME =#{username}
+			PHONE = #{phone},
+			EMAIL = #{email},
+			ADDRESS = #{address}
+		WHERE 
+			USERNAME = #{username}
 	</update>
 		
 	<delete id = "deleteUser"
