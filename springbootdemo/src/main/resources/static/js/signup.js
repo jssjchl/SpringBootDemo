@@ -55,9 +55,10 @@ function initComponent() {
 			columns: [
 				{
 					bind: 'signup'
+					, name: 'signup'
 					, type: 'button'
 					, text: 'Sign up'
-					, width: '120px'
+					, width: '150px'
 					, height: '30px'
 					, rowHeight: '40px'
 					, columnWidth: '50%'
@@ -65,9 +66,10 @@ function initComponent() {
 				},
 				{
 					bind: 'cancel'
+					, name: 'cancel'
 					, type: 'button'
 					, text: 'Cancel'
-					, width: '120px'
+					, width: '150px'
 					, height: '30px'
 					, rowHeight: '40px'
 					, columnWidth: '50%'
@@ -117,17 +119,24 @@ function initComponent() {
 }
 
 function initEvent() {
-	$('#sampleForm').on('buttonClick', function(event) {
+	
+	$('#sampleForm').jqxForm('getComponentByName', 'signup').on('click', function() {
+		$('#sampleForm').jqxForm('submit', "/signupCheck", null, 'POST');
+		/*$('#sampleForm').jqxValidator('validate');*/
+	});
+	$('#sampleForm').jqxForm('getComponentByName', 'cancel').on('click', function() {
+		location.href = "/login";
+	});
+	/*$('#sampleForm').on('buttonClick', function(event) {
 		var args = event.args;
 		var text = args.text // clicked button's text.;
 		if (text == 'Cancel') {
 			location.href = "/login"
 		}
 		else {
-			//$('#sampleForm').jqxValidator('validate');
 			$('#sampleForm').jqxForm('submit', "/signupCheck", null, 'POST');
 		}
-	});
+	});*/
 
 
 	$('#sampleForm').on('validationSuccess', function() {

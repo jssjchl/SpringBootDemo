@@ -27,10 +27,10 @@ function initComponent() {
 	$("#username, #password").jqxInput();
 	$("#rememberme").jqxCheckBox({ width: 130 });
 	$("#loginButton").jqxButton({
-		width: 97, height: 40
+		width: 91, height: 30
 	});
 	$("#signupButton").jqxButton({
-		width: 97, height: 40
+		width: 91, height: 30
 	});
 
 	// add validation rules.

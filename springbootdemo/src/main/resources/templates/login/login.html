@@ -2,8 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:insert="common/header :: fragment-header"></div>
 <body>
-	<div
-		style="height: 219px; margin: 350px 0 0 800px; display: block; font-size: 13px; font-family: Verdana;">
+	<div style="height: 219px; margin: 350px 0 0 800px; display: block; font-size: 13px; font-family: Verdana;">
 		<form class="form" id="form" method="post" action="/loginCheck" style="width: 650px;">
 			<div>
 				<h2>Login Demo</h2>
@@ -20,12 +19,10 @@
 				<div name="rememberme" id="rememberme">Keep me logged in on this computer</div>
 			</div>
 			<div>
-				<input id="signupButton" type="button" value="SignUp" />
-				<input id="loginButton" type="button" value="Login" />
+				<input id="signupButton" type="button" value="SignUp" /> <input id="loginButton" type="button" value="Login" />
 			</div>
 		</form>
 	</div>
 	<script type="text/javascript" src="/static/js/login.js"></script>
-
 </body>
 </html>
