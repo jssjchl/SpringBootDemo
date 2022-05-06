@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.barunsw.springbootdemo.dao.UserDao">
+	<select id="selectAllUseList"
+		resultType="com.barunsw.springbootdemo.vo.UserVo"
+		parameterType="com.barunsw.springbootdemo.vo.UserVo">
+		SELECT
+			ROWNUM AS NO,
+			A.*
+		FROM
+			(SELECT * FROM TB_USER
+		ORDER BY USERNAME DESC) A;
+	</select> 
+	
+	<update id = "updateUser"
+		parameterType="com.barunsw.springbootdemo.vo.UserVo">
+		UPDATE  
+			TB_USER
+		SET
+			PHONE =#{phone},
+			EMAIL =#{email},
+			ADDRESS =#{address}
+		WHERE
+			USERNAME =#{username}
+	</update>
+		
+	<delete id = "deleteUser"
+		parameterType="com.barunsw.springbootdemo.vo.UserVo">
+		DELETE FROM 
+			TB_USER
+		WHERE	
+	 		USERNAME = #{username}
+	</delete>
+</mapper>

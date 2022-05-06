@@ -1,12 +1,15 @@
 package com.barunsw.springbootdemo.vo;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class UserVo {
 
+	private int no;
 	private String username;
 	private String password;
 	private String email;
 	private String phone;
-
+	private String address;
 	public String getUsername() {
 		return username;
 	}
@@ -39,10 +42,24 @@ public class UserVo {
 		this.phone = phone;
 	}
 
-	@Override
-	public String toString() {
-		return "UserVo [username=" + username + ", password=" + password + ", email=" + email + ", phone=" + phone
-				+ "]";
+	public int getNo() {
+		return no;
 	}
 
+	public void setNo(int no) {
+		this.no = no;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 }

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<div th:insert="common/header :: fragment-header"></div>
+<div th:replace="common/header :: fragment-header"></div>
 <body>
-
+	<div id="wrap">
+		<div id="head">header area</div>
+		<div class="left_tree" th:insert="common/menu :: fragment-tree"></div>
+		<div id="content" th:insert="${callpage} :: content-view"></div>
+	</div>
 </body>
-</html> 
+</html>
