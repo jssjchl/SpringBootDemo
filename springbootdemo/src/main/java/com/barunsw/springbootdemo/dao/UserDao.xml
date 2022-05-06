@@ -8,11 +8,11 @@
 		resultType="com.barunsw.springbootdemo.vo.UserVo"
 		parameterType="com.barunsw.springbootdemo.vo.UserVo">
 		SELECT
-			ROW_NUMBER() OVER() AS NO,
+			ROWNUM AS NO,
 			A.*
 		FROM
 			(SELECT * FROM TB_USER
-		ORDER BY USERNAME ASC) A;
+		ORDER BY USERNAME DESC) A;
 	</select> 
 	
 	<update id = "updateUser"

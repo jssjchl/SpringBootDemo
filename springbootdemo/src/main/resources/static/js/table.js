@@ -2,6 +2,23 @@ $(document).ready(function () {
     initComponent();
     initEvent();
 });
+
+function ajaxApi(typeVal, urlVal, dataVal, dataSource){
+	 			$.ajax({	
+                          type: typeVal
+                        , url: urlVal
+                        , data : dataVal
+                        , dataType: "json"
+                        , error: function () {
+                            alert('FAIL');
+                        }
+                        , success: function (response) {
+							dataAdapter = new $.jqx.dataAdapter(ordersSource);
+                   		 	$("#table").jqxDataTable(dataSource, dataAdapter);                        
+                   		 }
+                    });
+}
+
 function initComponent() {
     var ordersSource =
     {
@@ -15,7 +32,7 @@ function initComponent() {
         dataType: "json",
         id: 'username',
         url: "/getAllUserList",
-        addRow: function (rowID, rowData, position, commit) {
+      /*  addRow: function (rowID, rowData, position, commit) {
             // synchronize with the server - send insert command
             // call commit with parameter true if the synchronization with the server is successful 
             // and with parameter false if the synchronization failed.
@@ -33,11 +50,11 @@ function initComponent() {
             // call commit with parameter true if the synchronization with the server is successful 
             // and with parameter false if the synchronization failed.
             commit(true);
-        }
+        }*/
     };
     var dataAdapter = new $.jqx.dataAdapter(ordersSource, {
         loadComplete: function () {
-            // data is loaded.
+	
         }
     });
     $("#table").jqxDataTable(
@@ -48,8 +65,6 @@ function initComponent() {
             sortable: true,
             altRows: true,
             ready: function () {
-                // called when the DataTable is loaded.  
-                // init jqxWindow widgets.
                 $("#no").jqxInput({ disabled: true, width: 150, height: 30 });
                 $("#username").jqxInput({ disabled: true, width: 150, height: 30 });
                 $("#email").jqxInput({ width: 150, height: 30 });
@@ -64,28 +79,18 @@ function initComponent() {
                 });
                 
                 $("#delete").mousedown(function(){
+		            var editRow = parseInt($("#dialog").attr('data-row'));
                     var rowData = {
                         username : $("#username").val()
                     }
-                    $.ajax({
-                        type: "delete"
-                        , url: "/deleteUser"
-                        , data : rowData
-                        , dataType: "json"
-                        , error: function () {
-                            alert('FAIL');
-                        }
-                        , success: function (response) {
-	                    	dataAdapter = new $.jqx.dataAdapter(ordersSource);
-                   		 	$("#table").jqxDataTable('source', dataAdapter);
-							console.log(rowData);
-                        }
-                    });
+                    ajaxApi("delete", "/deleteUser", rowData, 'source');
+                    
                     $("#dialog").jqxWindow('close');
+					$("#table").jqxDataTable('deleteRow', editRow, rowData); 
                 });
 
                 $("#save").mousedown(function () {
-                    var editRow = parseInt($("#dialog").attr('data-row'));
+	               	var editRow = parseInt($("#dialog").attr('data-row'));
                     var rowData = {
                         no: $("#no").val(),
                         username: $("#username").val(),
@@ -93,23 +98,12 @@ function initComponent() {
                         phone: $("#phone").val(),
                         address: $("#address").val()
                     };
-                    $.ajax({
-                        type: "POST"
-                        , url: "/updateUser"
-                        , data : rowData
-                        , dataType: "json"
-                        , error: function () {
-                            alert('FAIL');
-                        }
-                        , success: function (response) {
-							console.log(rowData);
-                        }
-                    });
+                    
+                    ajaxApi("POST", "/updateUser", rowData, 'source');
+                    
                     $("#dialog").jqxWindow('close');
-                    $("#table").jqxDataTable('updateRow', editRow, rowData); 
-                    /*여기가 테이블에 바로 반영시켜주는 역할*/
+					$("#table").jqxDataTable('updateRow', editRow, rowData); 
                 });
-	
 
                 $("#dialog").on('close', function () {
                     $("#table").jqxDataTable({ disabled: false });
@@ -125,7 +119,6 @@ function initComponent() {
                 $("#dialog").css('visibility', 'visible');
             },
             pagerButtonsCount: 8,
-
             columns: [
                 {
                     text: 'No'
