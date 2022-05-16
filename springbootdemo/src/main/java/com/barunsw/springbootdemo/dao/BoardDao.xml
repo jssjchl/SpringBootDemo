@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.barunsw.springbootdemo.dao.BoardDao">
+	<select id="getBoardList"
+		resultType="com.barunsw.springbootdemo.vo.BoardVo"
+		parameterType="com.barunsw.springbootdemo.vo.BoardVo">
+		SELECT 
+			A.BOARDID, A.TITLE, A.REGISTER, A.CONTENT, A.FILEID, B.FILENAME
+		FROM 
+			TB_BOARD AS A
+		LEFT JOIN TB_FILE AS B ON A.FILEID = B.FILEID 
+	</select> 
+
+	<select id="getBoardData"
+		resultType="com.barunsw.springbootdemo.vo.BoardVo"
+		parameterType="com.barunsw.springbootdemo.vo.BoardVo">
+		SELECT 
+			A.BOARDID, A.TITLE, A.REGISTER, A.CONTENT, A.FILEID, B.FILENAME
+		FROM 
+			TB_BOARD AS A
+		LEFT JOIN 
+			TB_FILE AS B ON A.FILEID = B.FILEID 
+		WHERE 
+			BOARDID = #{boardId}
+	</select> 
+	
+	<insert id="registBoard" parameterType="com.barunsw.springbootdemo.vo.BoardVo">
+	INSERT INTO 
+		TB_BOARD(TITLE, REGISTER, CONTENT, FILEID)
+	 VALUES(#{title}, #{register}, #{content}, #{fileId})
+
+	</insert>
+</mapper>

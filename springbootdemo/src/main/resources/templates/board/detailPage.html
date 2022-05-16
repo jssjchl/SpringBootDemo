@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<div th:replace="common/header :: fragment-header"></div>
+<div th:fragment="content-view">
+	<div style="margin-left: 25px;">
+		<h2>게시물 상세 조회</h2>
+		<table id="valid">
+			<colgroup>
+				<col style="width: 15%" />
+				<col style="width: 85%" />
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>Title</th>
+					<td>
+						<div class="formbox select-plus-input">
+							<input type="text" name="title" id="title" value="" />${title}
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>Register</th>
+					<td>
+						<div>
+							<input type="text" name="register" id="register" value="" />${register}
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>Content</th>
+					<td style="width: 100%;">
+						<textarea id="content" style="width: 100%;">${content}</textarea>
+					</td>
+				</tr>
+				<tr>
+					<th>Attached Files</th>
+					<td></td>
+				</tr>
+				<tr>
+					<td align="right">
+						<br />
+						<button id="edit">Edit</button>
+						<button style="margin-left: 5px;" id="cancel">Cancel</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript" src="/static/js/detail.js"></script>
+</div>

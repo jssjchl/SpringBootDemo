@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.barunsw.springbootdemo.dao.FileDao">
+	<select id="downloadFile"
+		resultType="com.barunsw.springbootdemo.vo.FileVo"
+		parameterType="com.barunsw.springbootdemo.vo.FileVo">
+		SELECT 
+			FILEPATH,
+			FILENAME
+		FROM 
+			TB_FILE
+		WHERE
+			FILEID = #{fileId}
+	</select> 
+	
+	<insert id="insertFile" parameterType="com.barunsw.springbootdemo.vo.FileVo" >
+	INSERT INTO 
+		TB_FILE(FILEPATH, FILENAME)
+	VALUES
+	 	(#{filePath}, #{fileName})
+	<selectKey resultType="int" keyProperty="fileId" order="AFTER">
+        SELECT last_insert_id()
+	</selectKey>
+	</insert>
+</mapper>

@@ -29,4 +29,20 @@ public class ViewController {
 		model.addAttribute("callpage", "user/table");
 		return "index";
 	}
+	
+	@GetMapping("/boardTable")
+	public String getBoardList(Model model) {
+		model.addAttribute("callpage", "board/boardTable");
+		return "index";
+	}
+	@GetMapping("/regist")
+	public String registPage(Model model) {
+		model.addAttribute("callpage", "board/regist");
+		return "index";
+	}
+	@GetMapping("/editMenu")
+	public String editMenuPage(Model model) {
+		model.addAttribute("callpage", "menu//editMenu");
+		return "index";
+	}
 }

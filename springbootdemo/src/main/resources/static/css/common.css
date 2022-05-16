@@ -38,3 +38,7 @@ html, body {
 .jqx-menu-item-top, .jqx-menu-item {
 	font-size: 20px;
 }
+
+.jqx-file-upload-buttons-container, .jqx-file-upload-file-upload {
+    display: none !important;
+}

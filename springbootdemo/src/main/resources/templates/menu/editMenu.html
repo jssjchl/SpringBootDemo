@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:insert="common/header :: fragment-header"></div>
+<div th:fragment="content-view">
+	<div id="jqxLayout">
+		<div data-container="menuTree">
+			<div id='jqxMenuTree'>Menu</div>
+		</div>
+		<div data-container="editMenuForm">
+			<div id='menuForm' style="width: 400px; height: auto;"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="static/js/editMenu.js"></script>
+</div>
+
+</html>
