@@ -14,8 +14,20 @@ public class MenuService {
 	@Autowired
 	private MenuDao menuDao;
 
-	public List<MenuVo> getMenuList() {
-		List<MenuVo> menuList = menuDao.selectMenuList();
+	public List<MenuVo> getMenuList(String menu) {
+		List<MenuVo> menuList = menuDao.selectMenuList(menu);
 		return menuList;
+	}
+	public int insertMenuData(MenuVo menuVo) {
+		int result = menuDao.insertMenuData(menuVo);
+		return result;
+	}
+	public int updateMenuData(MenuVo menuVo) {
+		int result = menuDao.updateMenuData(menuVo);
+		return result;
+	}
+	public int deleteMenuData(MenuVo menuVO) {
+		int result = menuDao.deleteMenuData(menuVO);
+		return result;
 	}
 }

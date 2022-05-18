@@ -1,9 +1,16 @@
 $(document).ready(function () {
-    initComponent();
+    initData();
 });
 
-function initComponent() {
-    var url = "/menuData";
+function initData() {
+    var url = "/menuData/tree";
+    var data = [
+                { 
+                    "parentid": 0,
+                    "menu_Name": "dsadsad",
+                    "menu_Url": "/"
+                }
+        ]
     var source =
     {
         datatype: "json",
@@ -11,25 +18,29 @@ function initComponent() {
             { name: 'menu_Id' },
             { name: 'menu_Name' },
             { name: 'parent_Id' },
-            { name: 'value' }
+            { name: 'menu_Url' }
         ],
         id: 'menu_Id',
         url: url
     };
     var dataAdapter = new $.jqx.dataAdapter(source, {
-        loadComplete: function () {
-            var records = dataAdapter.getRecordsHierarchy('menu_Id', 'parent_Id', 'items', [{ name: 'menu_Name', map: 'label' }]);
-            console.log(records);
-            $('#jqxMenuTree').jqxTree({ source: records, width: '100%' });
+        loadComplete: function (response) {
+            var records = dataAdapter.getRecordsHierarchy('menu_Id', 'parent_Id', 'items', [{ name: 'menu_Name', map: 'label' },
+            { name: 'menu_Url', map: 'value' }, { name: 'parent_Id', map: 'parentId' }, { name: 'menu_Id', map: 'id' }]);
+
+            initComponent(records);
         }
     });
     dataAdapter.dataBind();
+}
+function initComponent(records) {
+
     var layout = [{
         type: 'layoutGroup',
         orientation: 'horizontal',
         items: [{
             type: 'layoutGroup',
-            width: 500,
+            width: "30%",
             alignment: 'left',
             items: [{
                 type: 'documentGroup',
@@ -38,21 +49,24 @@ function initComponent() {
                 items: [{
                     type: 'documentPanel',
                     title: 'Menu',
-                    contentContainer: 'menuTree'
+                    contentContainer: 'menuTree',
+                     initContent: function () {
+                    $('#jqxMenuTree').jqxTree({ source: records, allowDrop: false, allowDrag: false });
+                    $('#jqxMenuTree').jqxTree('selectItem', $("#jqxMenuTree").find('li:first')[0]);
+                    $('#jqxMenuTree').jqxTree('expandItem', $('#jqxMenuTree').jqxTree('selectedItem'));
+                    }
                 }]
             }]
         }, {
             type: 'documentGroup',
-            width: 1030,
+            width: "70%",
             minWidth: 200,
             items: [{
                 type: 'documentPanel',
                 title: 'Menu Edit Form',
                 contentContainer: 'editMenuForm',
                 initContent: function () {
-                    var item = $('#jqxMenuTree').jqxTree('getSelectedItem');
-                    menu_Name = item.label;
-                    console.log(item.label);
+	                    var item = $('#jqxMenuTree').jqxTree('getSelectedItem');
                     $('#menuForm').jqxForm({
                         template: [
                             {
@@ -72,12 +86,20 @@ function initComponent() {
                                 , width: '250px'
                             },
                             {
-                                bind: 'parent_Id'
-                                , name: 'parent_Id'
+                                bind: 'menu_Url'
+                                , name: 'menu_Url'
                                 , type: 'text'
                                 , label: 'Menu URL'
                                 , labelWidth: '80px'
                                 , width: '250px'
+                            },
+                            {
+                                bind: 'parent_Id'
+                                , type: 'blank'
+                            },
+                            {
+                                bind: 'menu_Id'
+                                , type: 'blank'
                             },
                             {
                                 columns: [
@@ -86,27 +108,55 @@ function initComponent() {
                                         , name: 'add'
                                         , type: 'button'
                                         , text: 'ADD'
-                                        , width: '150px'
+                                        , width: '75px'
                                         , height: '30px'
-                                        , rowHeight: '40px'
-                                        , columnWidth: '50%'
-                                        , align: 'right'
                                     },
                                     {
                                         bind: 'edit'
                                         , name: 'edit'
                                         , type: 'button'
                                         , text: 'Edit'
-                                        , width: '150px'
+                                        , width: '75px'
                                         , height: '30px'
-                                        , rowHeight: '40px'
-                                        , columnWidth: '50%'
+                                    },
+                                    {
+                                        bind: 'save'
+                                        , name: 'save'
+                                        , type: 'button'
+                                        , text: 'Save'
+                                        , width: '75px'
+                                        , height: '30px'
+                                    },
+                                    {
+                                        bind: 'delete'
+                                        , name: 'delete'
+                                        , type: 'button'
+                                        , text: 'Delete'
+                                        , width: '75px'
+                                        , height: '30px'
+                                    },
+                                    {
+                                        bind: 'cancel'
+                                        , name: 'cancel'
+                                        , type: 'button'
+                                        , text: 'Cancel'
+                                        , width: '75px'
+                                        , height: '30px'
                                     }
-                                ],
-
+                                ]
                             }
-                        ]
+                        ],
+                        value: {
+                            menu_Url: item.parentElement,
+                            menu_Name: item.label,
+                            menu_Url: item.value
+                        }
                     });
+                    $('#menuForm').jqxForm('hideComponent', 'save');
+                    $('#menuForm').jqxForm('getComponentByName', 'save').jqxButton({ disabled: true });
+                    $('#menuForm').jqxForm('getComponentByName', 'parent_Menu').jqxInput({ disabled: true });
+                    $('#menuForm').jqxForm('getComponentByName', 'menu_Name').jqxInput({ disabled: true });
+                    $('#menuForm').jqxForm('getComponentByName', 'menu_Url').jqxInput({ disabled: true });
                 }
             }]
         }]
@@ -116,31 +166,121 @@ function initComponent() {
 }
 
 function initEvent() {
+    var selectData = null;
+    var status = null;
 
     $('#jqxMenuTree').on('itemClick', function (event) {
         var args = event.args;
         var item = $('#jqxMenuTree').jqxTree('getItem', args.element);
-        var selectData = {
+        console.log(item);
+        selectData = {
             menu_Name: item.label
             , menu_Url: item.value
             , menu_Id: item.id
-            , parent_Id: item.parentId
+            , parent_Id: item.parent_Id
             , parent_Menu: '/'
         };
-
+        console.log(selectData);
         if ($('#jqxMenuTree').jqxTree('getItem', item.parentElement)) {
             selectData['parent_Menu'] = $('#jqxMenuTree').jqxTree('getItem', item.parentElement).label;
         }
-        console.log(selectData);
+        $('#menuForm').jqxForm('val', selectData);
     });
 
     $('#menuForm').jqxForm('getComponentByName', 'add').on('click', function () {
-        var menuName = $('#menuForm').jqxForm('getComponentByName', 'menu_Name');
+		status ='add';
+        $('#menuForm').jqxForm('getComponentByName', 'add').jqxButton({ disabled: true });
+        $('#menuForm').jqxForm('getComponentByName', 'edit').jqxButton({ disabled: true });
+        $('#menuForm').jqxForm('getComponentByName', 'save').jqxButton({ disabled: false });
+        $('#menuForm').jqxForm('getComponentByName', 'menu_Name').jqxInput({ disabled: false });
+        $('#menuForm').jqxForm('getComponentByName', 'menu_Url').jqxInput({ disabled: false });
+
+        $('#jqxMenuTree').jqxTree({ disabled: true });
         var selectedItem = $('#jqxMenuTree').jqxTree('selectedItem');
+        var setData = {
+            menu_Name: null
+            , menu_Url: null
+            , menu_Id: null
+            , parent_Id: selectedItem.id
+            , parent_Menu: selectedItem.label
+        };
+        $('#menuForm').jqxForm('val', setData);
+    });
+
+    $('#menuForm').jqxForm('getComponentByName', 'save').on('click', function () {
+        var selectedItem = $('#jqxMenuTree').jqxTree('selectedItem');
+        var menuName = $('#menuForm').jqxForm('getComponentByName', 'menu_Name').jqxInput('val');
+        var url = $('#menuForm').jqxForm('getComponentByName', 'menu_Url').jqxInput('val');
+        var addData = {
+            menu_Name: menuName
+            , menu_Id: selectedItem.id
+            , menu_Url: url
+            , parent_Id: selectedItem.id
+        };
+        var url = null;
+        if(status =='add'){
+			url ="/addMenu";
+		}
+		else{
+			url ="/updateMenu";
+			addData['parent_Id'] = selectedItem.parentId;
+		}
+        console.log(addData);
         if (selectedItem != null) {
-            $('#jqxMenuTree').jqxTree('addTo', { label: menuName }, selectedItem.element, false);
+            $.ajax({
+                url: url
+                , type: "POST"
+                , data: addData
+                , cache: false
+                , success: function (response) {
+                    console.log("success");
+                    location.reload();
+                }
+            });
             $('#jqxMenuTree').jqxTree('render');
         }
     });
 
+    $('#menuForm').jqxForm('getComponentByName', 'edit').on('click', function () {
+        status ='edit';
+        $('#menuForm').jqxForm('getComponentByName', 'save').jqxButton({ disabled: false });
+        $('#menuForm').jqxForm('getComponentByName', 'add').jqxButton({ disabled: true });
+        $('#menuForm').jqxForm('getComponentByName', 'edit').jqxButton({ disabled: true });
+        $('#menuForm').jqxForm('getComponentByName', 'menu_Name').jqxInput({ disabled: false });
+        $('#menuForm').jqxForm('getComponentByName', 'menu_Url').jqxInput({ disabled: false });
+    });
+
+    $('#menuForm').jqxForm('getComponentByName', 'delete').on('click', function () {
+        var selectedItem = $('#jqxMenuTree').jqxTree('selectedItem');
+        console.log(selectedItem);
+        var deleteData = {
+            menu_Id: selectedItem.id
+        };
+        if (selectedItem != null && selectedItem.parentElement != null) {
+            $.ajax({
+                url: "/deleteMenu"
+                , type: "DELETE"
+                , data: deleteData
+                , cache: false
+                , success: function (response) {
+                    console.log("success");
+                    location.reload();
+                }
+            });
+            $('#jqxMenuTree').jqxTree('render');
+        }
+        else {
+            alert("선택되지않았거나 부모 노드가 있거나 없습니다.");
+        }
+    });
+
+    $('#menuForm').jqxForm('getComponentByName', 'cancel').on('click', function () {
+        $('#menuForm').jqxForm('getComponentByName', 'add').jqxButton({ disabled: false });
+        $('#menuForm').jqxForm('getComponentByName', 'edit').jqxButton({ disabled: false });
+        $('#menuForm').jqxForm('getComponentByName', 'save').jqxButton({ disabled: true });
+        $('#menuForm').jqxForm('getComponentByName', 'menu_Name').jqxInput({ disabled: true });
+        $('#menuForm').jqxForm('getComponentByName', 'menu_Url').jqxInput({ disabled: true });
+        $('#jqxMenuTree').jqxTree({ disabled: false });
+        $('#menuForm').jqxForm('val', selectData);
+    });
 }

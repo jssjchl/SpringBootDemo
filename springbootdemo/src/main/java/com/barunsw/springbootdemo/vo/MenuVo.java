@@ -8,6 +8,7 @@ public class MenuVo {
 	private String menu_Name;
 	private int parent_Id;
 	private String menu_Url;
+	private String menu;
 
 	public int getMenu_Id() {
 		return menu_Id;

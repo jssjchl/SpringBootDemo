@@ -42,7 +42,12 @@ public class ViewController {
 	}
 	@GetMapping("/editMenu")
 	public String editMenuPage(Model model) {
-		model.addAttribute("callpage", "menu//editMenu");
+		model.addAttribute("callpage", "menu/editMenu");
+		return "index";
+	}
+	@GetMapping("/groupPage")
+	public String editGroupPage(Model model) {
+		model.addAttribute("callpage", "group/groupPage");
 		return "index";
 	}
 }

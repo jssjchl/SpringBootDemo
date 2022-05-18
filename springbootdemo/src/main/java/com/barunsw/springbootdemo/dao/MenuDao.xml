@@ -11,5 +11,36 @@
 			menu_Id, menu_Name, parent_Id, menu_Url 
 		FROM
 			TB_MENU
+			<if test= "menu == 'side'">
+		WHERE NOT 
+			parent_Id IN (0)
+			</if>
 	</select>
+	
+	<insert id="insertMenuData"
+		parameterType="com.barunsw.springbootdemo.vo.MenuVo">
+		INSERT INTO 
+			TB_MENU(MENU_NAME, PARENT_ID, MENU_URL)
+		VALUE(#{menu_Name},#{parent_Id},#{menu_Url})
+	</insert>
+	
+	<update id="updateMenuData"
+		parameterType="com.barunsw.springbootdemo.vo.MenuVo">
+		UPDATE  
+			TB_MENU
+		SET	
+			  MENU_NAME = #{menu_Name},
+			  PARENT_ID = #{parent_Id},
+			  MENU_URL = #{menu_Url}
+		WHERE
+			MENU_ID = #{menu_Id}
+	</update>
+	
+	<delete id="deleteMenuData"
+		parameterType="com.barunsw.springbootdemo.vo.MenuVo">
+		DELETE FROM
+			TB_MENU
+		WHERE
+			MENU_ID= #{menu_Id}
+	</delete>
 </mapper>
