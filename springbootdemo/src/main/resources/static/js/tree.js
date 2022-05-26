@@ -19,7 +19,7 @@ $(document).ready(function () {
             $("#jqxMenu").jqxMenu({
                 source: records,
                 width: '100%',
-                height: '779px',
+                height: '100%',
                 mode: 'vertical'
             });
             $("#jqxMenu").css('visibility', 'visible');

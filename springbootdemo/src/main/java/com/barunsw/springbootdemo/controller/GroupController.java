@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.barunsw.springbootdemo.constants.Result;
 import com.barunsw.springbootdemo.service.GroupService;
 import com.barunsw.springbootdemo.vo.GroupVo;
 import com.barunsw.springbootdemo.vo.ResponseVo;
@@ -28,7 +29,7 @@ public class GroupController {
 		List<GroupVo> groupDataList = groupService.getGroupData();
 		log.debug(groupDataList + "");
 		responseVo.setData(groupDataList);
-		responseVo.setResult("OK");
+		responseVo.setResult(Result.OK);
 		return responseVo.build();
 	}
 
@@ -36,23 +37,25 @@ public class GroupController {
 	public ResponseEntity<ResponseVo> addGroup(GroupVo groupVo) {
 		ResponseVo responseVo = new ResponseVo();
 		int result = groupService.addGroupData(groupVo);
-		responseVo.setResult("OK");
+		responseVo.setResult(Result.OK);
 		responseVo.setData(result);
 		return responseVo.build();
 	}
+
 	@PostMapping("/updateGroup")
 	public ResponseEntity<ResponseVo> updateGroup(GroupVo groupVo) {
 		ResponseVo responseVo = new ResponseVo();
 		int result = groupService.editGroupData(groupVo);
-		responseVo.setResult("OK");
+		responseVo.setResult(Result.OK);
 		responseVo.setData(result);
 		return responseVo.build();
 	}
+
 	@DeleteMapping("/deleteGroup")
-	public ResponseEntity<ResponseVo> deleteGroup(GroupVo groupVo){
+	public ResponseEntity<ResponseVo> deleteGroup(GroupVo groupVo) {
 		ResponseVo responseVo = new ResponseVo();
 		int result = groupService.removeGroupData(groupVo);
-		responseVo.setResult("OK");
+		responseVo.setResult(Result.OK);
 		responseVo.setData(result);
 		return responseVo.build();
 	}

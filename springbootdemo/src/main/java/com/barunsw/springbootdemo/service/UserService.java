@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.barunsw.springbootdemo.dao.UserDao;
+import com.barunsw.springbootdemo.vo.GroupMappingVo;
 import com.barunsw.springbootdemo.vo.UserVo;
 
 @Service
@@ -19,14 +20,31 @@ public class UserService {
 
 	public List<UserVo> getAllUserList() {
 		List<UserVo> allUserList = userDao.selectAllUseList();
-		LOGGER.info(allUserList.toString());
 		return allUserList;
+	}
+
+	public List<UserVo> getDenyUser(int groupId) {
+		List<UserVo> denyUserList = userDao.selectDenyUserList(groupId);
+		return denyUserList;
+	}
+
+	public List<UserVo> getAuthUser(int groupId) {
+		List<UserVo> authUserList = userDao.selectAuthUserList(groupId);
+		return authUserList;
+	}
+
+	public int addAuthUser(GroupMappingVo groupMappingVo) {
+		return userDao.addUserToAuthGroup(groupMappingVo);
+	}
+
+	public int removeAuthUser(GroupMappingVo groupMappingVo) {
+		return userDao.removeUserFromAuthGroup(groupMappingVo);
 	}
 
 	public int updateUser(UserVo userVo) {
 		return userDao.updateUser(userVo);
 	}
-	
+
 	public int deleteUser(UserVo userVo) {
 		return userDao.deleteUser(userVo);
 	}

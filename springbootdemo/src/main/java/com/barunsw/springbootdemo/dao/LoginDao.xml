@@ -20,7 +20,8 @@
 	
 	<insert id="insertUser" parameterType="com.barunsw.springbootdemo.vo.UserVo">
 	INSERT INTO 
-	TB_USER(USERNAME, PASSWORD, PHONE, EMAIL)
-	 VALUES(#{username}, #{password}, #{phone}, #{email})
+		TB_USER(USERNAME, REALNAME, PASSWORD, PHONE, EMAIL, ADDRESS)
+	 VALUES
+	 	(#{username}, #{realname}, #{password}, #{phone}, #{email}, #{address})
 	</insert>
 </mapper>

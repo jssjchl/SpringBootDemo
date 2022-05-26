@@ -1,6 +1,7 @@
 package com.barunsw.springbootdemo.vo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 public class GroupVo {
 
@@ -34,7 +35,7 @@ public class GroupVo {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 }

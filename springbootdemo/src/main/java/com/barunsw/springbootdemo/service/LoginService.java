@@ -11,7 +11,7 @@ public class LoginService {
 
 	@Autowired
 	private LoginDao loginDao;
-
+	
 	public UserVo loginProcess(UserVo userVo) {
 		UserVo uservo = loginDao.selectUser(userVo);
 		return uservo;

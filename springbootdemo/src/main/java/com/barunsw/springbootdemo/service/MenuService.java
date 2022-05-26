@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.barunsw.springbootdemo.annotation.ExcludeHistory;
 import com.barunsw.springbootdemo.dao.MenuDao;
 import com.barunsw.springbootdemo.vo.MenuVo;
 
@@ -14,6 +15,7 @@ public class MenuService {
 	@Autowired
 	private MenuDao menuDao;
 
+	@ExcludeHistory
 	public List<MenuVo> getMenuList(String menu) {
 		List<MenuVo> menuList = menuDao.selectMenuList(menu);
 		return menuList;

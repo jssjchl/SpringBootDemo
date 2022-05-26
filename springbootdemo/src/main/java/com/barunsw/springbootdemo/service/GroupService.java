@@ -20,8 +20,7 @@ public class GroupService {
 	}
 
 	public int addGroupData(GroupVo groupVo) {
-		int result = groupDao.insertGroupData(groupVo);
-		return result;
+		return groupDao.insertGroupData(groupVo);
 	}
 
 	public int editGroupData(GroupVo groupVo) {

@@ -121,11 +121,11 @@ function initComponent() {
 function initEvent() {
 	
 	$('#sampleForm').jqxForm('getComponentByName', 'signup').on('click', function() {
-		$('#sampleForm').jqxForm('submit', "/signupCheck", null, 'POST');
+		$('#sampleForm').jqxForm('submit', "/login/signupCheck", null, 'POST');
 		/*$('#sampleForm').jqxValidator('validate');*/
 	});
 	$('#sampleForm').jqxForm('getComponentByName', 'cancel').on('click', function() {
-		location.href = "/login";
+		location.href = "/login/login";
 	});
 	/*$('#sampleForm').on('buttonClick', function(event) {
 		var args = event.args;

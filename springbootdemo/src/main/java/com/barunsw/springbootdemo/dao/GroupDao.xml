@@ -24,8 +24,7 @@
 		UPDATE  
 			TB_GROUP
 		SET	
-			  GROUP_NAME = #{group_Name},
-			  PARENT_GROUP_ID = #{parent_Group_Id},
+			GROUP_NAME = #{group_Name}
 		WHERE
 			GROUP_ID = #{group_Id}
 	</update>

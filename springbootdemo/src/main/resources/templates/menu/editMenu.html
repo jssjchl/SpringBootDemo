@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <div th:insert="common/header :: fragment-header"></div>
 <div th:fragment="content-view">
+	<input type="hidden" id="mode" value="ADD" />
 	<div id="jqxLayout">
 		<div data-container="menuTree">
 			<div id='jqxMenuTree'>Menu</div>

@@ -3,8 +3,6 @@ $(document).ready(function() {
 	initEvent();
 });
 
-// validate form.
-
 function initEvent() {
 	$("#loginButton").click(function() {
 		$('#form').jqxValidator('validate');
@@ -19,7 +17,7 @@ function initEvent() {
 
 	
 	$("#signupButton").click(function() {
-		location.href = "/signup";
+		location.href = "/login/signup";
 	});
 }
 
