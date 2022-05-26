@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<div th:replace="common/header :: fragment-header"></div>
+<div th:fragment="content-view">
+	<div style="margin-left: 25px;">
+		<h2>게시물 등록</h2>
+		<table id="valid">
+			<tbody>
+				<tr>
+					<th>Title <span style="color: red">*</span></th>
+					<td>
+						<input type="text" name="title" id="title" placeholder="제목을 입력하세요">
+					</td>
+				</tr>
+				<tr>
+					<th>Register <span style="color: red">*</span></th>
+					<td>
+						<input type="text" name="register" id="register" placeholder="작성자를 입력하세요">
+					</td>
+				</tr>
+				<tr>
+					<th>Content <span style="color: red">*</span></th>
+					<td>
+						<textarea id="editor" name="content"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<th>Attached Files</th>
+					<td>
+						<div id="attachedFile"></div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right">
+						<br />
+						<button id="save">Save</button>
+						<button style="margin-left: 5px;" id="cancel">Cancel</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript" src="static/js/regist.js"></script>
+</div>
+

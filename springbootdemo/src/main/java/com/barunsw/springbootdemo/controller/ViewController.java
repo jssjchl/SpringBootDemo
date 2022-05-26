@@ -17,7 +17,6 @@ public class ViewController {
 	@Autowired
 	public TestDao testDao;
 
-
 	@GetMapping("/")
 	public String homePage(Model model) {
 		model.addAttribute("callpage", "common/empty");
@@ -30,4 +29,39 @@ public class ViewController {
 		return "index";
 	}
 
+	@GetMapping("/boardTable")
+	public String getBoardList(Model model) {
+		model.addAttribute("callpage", "board/boardTable");
+		return "index";
+	}
+
+	@GetMapping("/regist")
+	public String registPage(Model model) {
+		model.addAttribute("callpage", "board/regist");
+		return "index";
+	}
+
+	@GetMapping("/editMenu")
+	public String editMenuPage(Model model) {
+		model.addAttribute("callpage", "menu/editMenu");
+		return "index";
+	}
+
+	@GetMapping("/groupPage")
+	public String editGroupPage(Model model) {
+		model.addAttribute("callpage", "group/groupPage");
+		return "index";
+	}
+
+	@GetMapping("/auth")
+	public String authPage(Model model) {
+		model.addAttribute("callpage", "authorization/auth");
+		return "index";
+	}
+
+	@GetMapping("/history")
+	public String historyPage(Model model) {
+		model.addAttribute("callpage", "history/history");
+		return "index";
+	}
 }

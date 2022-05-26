@@ -4,27 +4,81 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.barunsw.springbootdemo.dao.UserDao">
+
 	<select id="selectAllUseList"
 		resultType="com.barunsw.springbootdemo.vo.UserVo"
 		parameterType="com.barunsw.springbootdemo.vo.UserVo">
-		SELECT
-			ROWNUM AS NO,
+		SELECT 
+			@ROWNUM:=@ROWNUM+1 AS no, 
 			A.*
-		FROM
-			(SELECT * FROM TB_USER
-		ORDER BY USERNAME DESC) A;
+		FROM 
+			tb_user A, (SELECT @ROWNUM:=0) AS R
+		order by 
+			A.USERNAME 
 	</select> 
+	
+	<select id="selectAuthUserList"
+		resultType="com.barunsw.springbootdemo.vo.UserVo"
+		parameterType="com.barunsw.springbootdemo.vo.UserVo">
+		SELECT 
+		 	U.USERNAME, U.REALNAME
+		FROM
+			(SELECT 
+				USERNAME
+				, GROUP_ID
+			FROM 
+				TB_GROUP_MAPPING
+			WHERE
+				GROUP_ID = #{groupId}) AS M<!--여기서 WHERE 조건문  -->
+		LEFT JOIN 
+			TB_USER AS U ON (U.USERNAME = M.USERNAME)
+	</select> 
+	
+	<select id="selectDenyUserList"
+		resultType="com.barunsw.springbootdemo.vo.UserVo"
+		parameterType="com.barunsw.springbootdemo.vo.UserVo">
+		select
+			U.*
+		from
+			TB_USER as U
+		where
+			U.USERNAME not in (
+		select
+			USERNAME
+		from
+			TB_GROUP_MAPPING
+		where
+			GROUP_ID = #{groupId} )
+	</select> 
+	
+	<insert id = "addUserToAuthGroup"
+	parameterType="com.barunsw.springbootdemo.vo.GroupMappingVo">
+		INSERT INTO 
+			TB_GROUP_MAPPING(GROUP_ID, USERNAME)
+		VALUE
+			(#{groupId}, #{userName})
+	</insert>
+	
+	<delete id = "removeUserFromAuthGroup"
+	parameterType="com.barunsw.springbootdemo.vo.GroupMappingVo">
+		DELETE FROM
+			TB_GROUP_MAPPING
+		WHERE
+			USERNAME = #{userName}
+	</delete>
 	
 	<update id = "updateUser"
 		parameterType="com.barunsw.springbootdemo.vo.UserVo">
 		UPDATE  
 			TB_USER
 		SET
-			PHONE =#{phone},
-			EMAIL =#{email},
-			ADDRESS =#{address}
-		WHERE
-			USERNAME =#{username}
+			PHONE    = #{phone}
+			,PASSWORD = #{password}
+			,EMAIL    = #{email}
+			,ADDRESS  = #{address}
+			,REALNAME = #{realname}
+		WHERE 
+			USERNAME = #{username}
 	</update>
 		
 	<delete id = "deleteUser"

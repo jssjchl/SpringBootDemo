@@ -1,24 +1,8 @@
 <!DOCTYPE html>
 <html lang="UTF-8" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="fragment-tree">
-	<div id='jqxWidget'>
-		<div id='jqxMenu' style="visibility: hidden;">
-			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="/table">사용자관리</a></li>
-				<li>연혁
-					<ul>
-						<li><a href="#">Product Development</a></li>
-						<li><a href="#">Delivery</a></li>
-					</ul>
-				</li>
-				<li>Products</li>
-				<li><a href="#">Contact Us</a>
-					<ul>
-						<li><a href="#">오는 길</a></li>
-					</ul></li>
-			</ul>
-		</div>
+<div th:replace="common/header :: fragment-header"></div>
+<div th:fragment="fragment-tree" style="height: 100%;">
+	<div id='jqxMenu' style="visibility: hidden;">
 		<script type="text/javascript" src="static/js/tree.js"></script>
 	</div>
 </div>

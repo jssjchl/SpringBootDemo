@@ -1,21 +1,40 @@
 package com.barunsw.springbootdemo.vo;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import com.barunsw.springbootdemo.constants.RequestType;
 
-public class UserVo {
+public class UserVo extends GroupMappingVo{
 
 	private int no;
 	private String username;
+	private String realname;
 	private String password;
 	private String email;
 	private String phone;
 	private String address;
+	private RequestType requestType;
+
+	public RequestType getRequestType() {
+		return requestType;
+	}
+
+	public void setRequestType(RequestType requestType) {
+		this.requestType = requestType;
+	}
+
 	public String getUsername() {
 		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public String getRealname() {
+		return realname;
+	}
+
+	public void setRealname(String realname) {
+		this.realname = realname;
 	}
 
 	public String getPassword() {
@@ -60,6 +79,6 @@ public class UserVo {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
+		return username;
 	}
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.barunsw.springbootdemo.dao.GroupDao">
+	<select id="selectGroupList"
+		resultType="com.barunsw.springbootdemo.vo.GroupVo"
+		parameterType="com.barunsw.springbootdemo.vo.GroupVo">
+		SELECT
+			GROUP_ID, PARENT_GROUP_ID, GROUP_NAME
+		FROM
+			TB_GROUP
+	</select>
+	
+	<insert id ="insertGroupData"
+		parameterType="com.barunsw.springbootdemo.vo.GroupVo">
+		INSERT INTO 
+			TB_GROUP(PARENT_GROUP_ID, GROUP_NAME)
+		VALUE
+			(#{parent_Group_Id}, #{group_Name})
+	</insert>
+	<update id="updateGroupData"
+		parameterType="com.barunsw.springbootdemo.vo.GroupVo">
+		UPDATE  
+			TB_GROUP
+		SET	
+			GROUP_NAME = #{group_Name}
+		WHERE
+			GROUP_ID = #{group_Id}
+	</update>
+	
+	<delete id="deleteGroupData"
+		parameterType="com.barunsw.springbootdemo.vo.GroupVo">
+		DELETE FROM
+			TB_GROUP
+		WHERE
+			GROUP_ID= #{group_Id}
+	</delete>
+</mapper>

@@ -8,7 +8,7 @@
 	<select id="selectNameList"
 		resultType="String">
 		SELECT NAME
-		FROM
+			FROM
 		TB_DB_USER
 	</select>
 </mapper>
