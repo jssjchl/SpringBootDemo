@@ -3,14 +3,34 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.barunsw.springbootdemo.dao.HistoryDao">
-	<select id="selectHistoryList"
-		resultType="com.barunsw.springbootdemo.vo.HistoryVo"
-		parameterType="com.barunsw.springbootdemo.vo.HistoryVo">
-		SELECT 
-			SEQ, URL, EVENT_TIME as eventTime, OPERATOR_ID as operatorId, OPERATOR_IP as operatorIp, PARAM, RESULT, REASON
-		FROM
-			TB_HISTORY
-	</select>
+	<sql id ="where">
+	  WHERE
+	    DATE_FORMAT(EVENT_TIME, '%Y-%m-%d') BETWEEN DATE_FORMAT(#{startDate}, '%Y-%m-%d') AND DATE_FORMAT(#{endDate}, '%Y-%m-%d')
+	    AND
+	    <choose>
+			<when test = "coloumType == 'ID'">
+				OPERATOR_ID like CONCAT('%', #{searchData},'%')
+	 		</when>
+			<when test = "coloumType == 'IP'">
+				 OPERATOR_IP like CONCAT('%', #{searchData},'%')
+			</when>
+			<when test = "coloumType == 'Param'">
+				 PARAM like CONCAT('%', #{searchData},'%')
+			</when>
+			<when test = "coloumType == 'Result'">
+				 result like CONCAT('%', #{searchData},'%')
+			</when>
+			<when test = "coloumType == 'Reason'">
+				 result like CONCAT('%', #{searchData},'%')
+			</when>
+			<when test = "coloumType == 'URL'">
+				 URL like CONCAT('%', #{searchData},'%')
+			</when>
+			<otherwise>
+				1 = 1
+			</otherwise>
+		</choose>		
+	</sql>
 	
 	<insert id ="insertHistory"
 		parameterType="com.barunsw.springbootdemo.vo.HistoryVo">
@@ -19,35 +39,39 @@
 		VALUE
 			(#{url},#{operatorId},#{operatorIp},#{param},#{result},#{reason})
 	</insert>
+
+	<select id="countHistory" resultType="int">
+	SELECT 
+		COUNT(*)
+		FROM
+			TB_HISTORY
+		<include refid ="where"></include>
+		ORDER BY SEQ DESC
+	</select>
 	
  	<select id ="searchHistoryDataList"
  		resultType="com.barunsw.springbootdemo.vo.HistoryVo"
 		parameterType="com.barunsw.springbootdemo.vo.HistoryVo">
+				
 		SELECT 
-			SEQ, URL, EVENT_TIME as eventTime, OPERATOR_ID as operatorId, OPERATOR_IP as operatorIp, PARAM, RESULT, REASON
-		FROM 
+			a.SEQ
+			, a.URL
+			, DATE_FORMAT(a.EVENT_TIME, '%Y-%m-%d %H:%i:%s') as eventTime 
+			, a.OPERATOR_ID as operatorId
+			, a.OPERATOR_IP as operatorIp
+			, a.PARAM
+			, a.RESULT
+			, a.REASON
+			, @rownum := @rownum + 1 as rn
+		FROM
+		( SELECT
+			*
+		  FROM
 			TB_HISTORY
-		WHERE
-			EVENT_TIME BETWEEN #{startDate} AND #{endDate} AND
-			<choose>
-				<when test = "coloumType == 'OPERATOR_ID'">
-					OPERATOR_ID like CONCAT('%',#{searchData},'%')
-	 			</when>
-				<when test = "coloumType == 'OPERATOR_IP'">
-					 OPERATOR_IP like CONCAT('%',#{searchData},'%')
-				</when>
-				<when test = "coloumType == 'PARAM'">
-					 PARAM like CONCAT('%',#{searchData},'%')
-				</when>
-				<when test = "coloumType == 'RESULT'">
-					 RESULT like CONCAT('%',#{searchData},'%')
-				</when>
-				<when test = "coloumType == 'EVENT_TIME'">
-					 EVENT_TIME like CONCAT('%',#{searchData},'%')
-				</when>
-				<otherwise>
-					 URL like CONCAT('%',#{searchData},'%')
-				</otherwise>
-			</choose>
+	    <include refid ="where"></include>
+		  ORDER BY EVENT_TIME DESC 
+		  LIMIT #{offset}, #{pagesize}) AS A
+		  , (SELECT @ROWNUM := #{offset}) AS R
 	</select> 
+	
 </mapper>

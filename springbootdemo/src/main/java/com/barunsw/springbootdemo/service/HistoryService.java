@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.barunsw.springbootdemo.dao.HistoryDao;
 import com.barunsw.springbootdemo.vo.HistoryVo;
+import com.barunsw.springbootdemo.vo.PagingVo;
 
 @Service
 public class HistoryService {
@@ -16,13 +17,17 @@ public class HistoryService {
 
 	@Autowired
 	private HistoryDao historyDao;
-	
-	public List<HistoryVo> getHistoryList() {
-		List<HistoryVo> list = historyDao.selectHistoryList();
+
+	public int totalCountHistory(HistoryVo historyVo) {
+		return historyDao.countHistory(historyVo);
+	}
+
+	public List<HistoryVo> getHistoryList(PagingVo vo) {
+		List<HistoryVo> list = historyDao.selectHistoryList(vo);
 		return list;
 	}
-	
-	public List<HistoryVo> searchHistoryData(HistoryVo historyVo) {
-		return historyDao.searchHistoryDataList(historyVo);
+
+	public List<HistoryVo> searchHistoryData(HistoryVo vo) {
+		return historyDao.searchHistoryDataList(vo);
 	}
 }

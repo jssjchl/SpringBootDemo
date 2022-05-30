@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.barunsw.springbootdemo.constants.Result;
 import com.barunsw.springbootdemo.service.HistoryService;
@@ -21,27 +20,18 @@ public class HistoryController {
 	@Autowired
 	private HistoryService historyService;
 
-	@GetMapping("/getHistory")
-	public ResponseEntity<ResponseVo> getHistory() {
+	@GetMapping("/getHistoryList")
+	public ResponseEntity<ResponseVo> getHistoryList(HistoryVo historyVo) {
+		LOGGER.debug("/getHistoryList : {}", historyVo);
+		
 		ResponseVo responseVo = new ResponseVo();
-		List<HistoryVo> historyList = historyService.getHistoryList();
-		responseVo.setData(historyList);
-		responseVo.setResult(Result.OK);
-		return responseVo.build();
-	}
-
-	@GetMapping("/searchHistory/{coloumType}/{searchData}/{startDate}/{endDate}")
-	public ResponseEntity<ResponseVo> searchHistory(@PathVariable String coloumType, @PathVariable String searchData,
-															@PathVariable String startDate, @PathVariable String endDate) {
-		ResponseVo responseVo = new ResponseVo();
-		HistoryVo historyVo = new HistoryVo();
-		historyVo.setSearchData(searchData);
-		historyVo.setColoumType(coloumType);
-		historyVo.setStartDate(startDate);
-		historyVo.setEndDate(endDate);
+		
+		int totalHistory = historyService.totalCountHistory(historyVo);
 		List<HistoryVo> historyList = historyService.searchHistoryData(historyVo);
+		responseVo.setTotalCount(totalHistory);
 		responseVo.setData(historyList);
 		responseVo.setResult(Result.OK);
+			
 		return responseVo.build();
 	}
 }

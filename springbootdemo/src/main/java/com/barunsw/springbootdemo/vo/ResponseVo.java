@@ -8,7 +8,8 @@ import com.barunsw.springbootdemo.constants.Result;
 public class ResponseVo {
 	private HttpStatus status = HttpStatus.OK;
 	private Result result;
-	private String message ="성공";
+	private int totalCount;
+	private String message = "성공";
 	private Object data;
 
 	public HttpStatus getStatus() {
@@ -25,6 +26,14 @@ public class ResponseVo {
 
 	public void setResult(Result result) {
 		this.result = result;
+	}
+
+	public int getTotalCount() {
+		return totalCount;
+	}
+
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
 	}
 
 	public String getMessage() {

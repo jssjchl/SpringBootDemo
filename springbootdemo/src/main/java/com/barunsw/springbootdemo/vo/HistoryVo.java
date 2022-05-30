@@ -1,5 +1,7 @@
 package com.barunsw.springbootdemo.vo;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,10 +9,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HistoryVo {
+public class HistoryVo extends PagingVo {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HistoryVo.class);
 
 	private int seq;
+	private int rn;
 	private String url;
 	private String eventTime;
 	private String operatorId;
@@ -20,22 +23,31 @@ public class HistoryVo {
 	private String reason;
 	private String coloumType;
 	private String searchData;
-	private String startDate;
-	private String endDate;
+	private Date startDate;
 
-	public String getStartDate() {
+	public int getRn() {
+		return rn;
+	}
+
+	public void setRn(int rn) {
+		this.rn = rn;
+	}
+
+	private Date endDate;
+
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(String startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public String getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(String endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
