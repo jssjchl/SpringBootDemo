@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.User;
 
 public class HistoryVo extends PagingVo {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HistoryVo.class);
@@ -24,6 +25,21 @@ public class HistoryVo extends PagingVo {
 	private String coloumType;
 	private String searchData;
 	private Date startDate;
+	private Date endDate;
+
+	public HistoryVo() {
+	}
+
+	public HistoryVo(HttpServletRequest request, String param) {
+		super();
+		User userId = (User) request.getSession().getAttribute("user");
+		this.url = request.getRequestURI();
+		this.operatorId = userId.getUsername();
+		this.operatorIp = request.getRemoteAddr();
+		this.param = param;
+		this.result = "OK";
+		this.reason = "reason";
+	}
 
 	public int getRn() {
 		return rn;
@@ -32,8 +48,6 @@ public class HistoryVo extends PagingVo {
 	public void setRn(int rn) {
 		this.rn = rn;
 	}
-
-	private Date endDate;
 
 	public Date getStartDate() {
 		return startDate;
@@ -65,20 +79,6 @@ public class HistoryVo extends PagingVo {
 
 	public void setSearchData(String searchData) {
 		this.searchData = searchData;
-	}
-
-	public HistoryVo() {
-	}
-
-	public HistoryVo(HttpServletRequest request, String param) {
-		super();
-		UserVo userVo = (UserVo) request.getSession().getAttribute("user");
-		this.url = request.getRequestURI();
-		this.operatorId = userVo.toString();
-		this.operatorIp = request.getRemoteAddr();
-		this.param = param;
-		this.result = "OK";
-		this.reason = "reason";
 	}
 
 	public int getSeq() {

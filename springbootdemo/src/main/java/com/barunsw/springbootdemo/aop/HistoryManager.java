@@ -43,6 +43,7 @@ public class HistoryManager {
 		LOGGER.debug("AOP 후");
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 				.getRequest();
+		
 		LOGGER.debug("session result ={}", request.getSession().getAttribute("user"));
 		if (request.getSession().getAttribute("user") != null) {
 			HistoryVo historyVo = new HistoryVo(request, sb.toString());

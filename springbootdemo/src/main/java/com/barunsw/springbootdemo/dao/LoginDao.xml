@@ -15,7 +15,6 @@
 		TB_USER
 	WHERE
 		USERNAME = #{username}
-		AND PASSWORD = #{password}
 	</select>
 	
 	<insert id="insertUser" parameterType="com.barunsw.springbootdemo.vo.UserVo">
