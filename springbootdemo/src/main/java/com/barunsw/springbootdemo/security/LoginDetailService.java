@@ -33,7 +33,7 @@ public class LoginDetailService implements UserDetailsService {
 		LOGGER.debug(username);
 		return User.builder()
 				.username(user.getUsername())
-				.password("{noop}" + user.getPassword())
+				.password(user.getPassword())
 				.roles("USER")
 				.build();
 	}

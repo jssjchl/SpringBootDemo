@@ -8,6 +8,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -32,7 +34,6 @@ public class HistoryManager {
 			sb.append(arg.toString()).append("\n");
 		}
 
-		LOGGER.debug("AOP 전");
 		Object result = null;
 		try {
 			result = joinPoint.proceed();
@@ -40,13 +41,11 @@ public class HistoryManager {
 		catch (Throwable e) {
 			LOGGER.error(e.getMessage(), e);
 		}
-		LOGGER.debug("AOP 후");
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 				.getRequest();
-		
-		LOGGER.debug("session result ={}", request.getSession().getAttribute("user"));
-		if (request.getSession().getAttribute("user") != null) {
-			HistoryVo historyVo = new HistoryVo(request, sb.toString());
+		User userId = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		if (userId.getUsername() != null) {
+			HistoryVo historyVo = new HistoryVo(request, sb.toString(), userId);
 			historyDao.insertHistory(historyVo);
 		}
 		return result;

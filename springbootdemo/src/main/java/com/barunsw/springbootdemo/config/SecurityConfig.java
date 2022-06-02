@@ -47,5 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		LOGGER.debug("auth userDetailsService!");
         auth.userDetailsService(detailService);
+        
     }
 }

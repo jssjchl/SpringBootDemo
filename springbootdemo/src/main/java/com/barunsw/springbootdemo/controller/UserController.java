@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.barunsw.springbootdemo.constants.RequestType;
 import com.barunsw.springbootdemo.constants.Result;
+import com.barunsw.springbootdemo.security.UserPasswordEncode;
 import com.barunsw.springbootdemo.service.UserService;
 import com.barunsw.springbootdemo.vo.GroupMappingVo;
 import com.barunsw.springbootdemo.vo.ResponseVo;
@@ -23,6 +24,9 @@ import com.barunsw.springbootdemo.vo.UserVo;
 public class UserController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
+	@Autowired
+	private UserPasswordEncode getPasswordEncoder; 
+	
 	@Autowired
 	private UserService userService;
 
@@ -74,6 +78,8 @@ public class UserController {
 	@PostMapping("/updateUser")
 	public ResponseEntity<ResponseVo> updateUser(UserVo userVo) {
 		ResponseVo responseVo = new ResponseVo();
+		LOGGER.debug("UserContorller = {}", userVo.toString());
+		userVo.setPassword(getPasswordEncoder.encode(userVo.getPassword()));
 		int result = userService.updateUser(userVo);
 		responseVo.setData(result);
 		responseVo.setResult(Result.OK);

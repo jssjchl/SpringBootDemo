@@ -22,6 +22,12 @@ public class UserService {
 		List<UserVo> allUserList = userDao.selectAllUseList();
 		return allUserList;
 	}
+	
+	public int selectDev1andAdmin(GroupMappingVo user) {
+		int cnt = userDao.selectDev1andAdmin(user);
+		LOGGER.debug("selectDev1andAdmin = {}", cnt);
+		return cnt;
+	}
 
 	public List<UserVo> getDenyUser(int groupId) {
 		List<UserVo> denyUserList = userDao.selectDenyUserList(groupId);

@@ -30,9 +30,8 @@ public class HistoryVo extends PagingVo {
 	public HistoryVo() {
 	}
 
-	public HistoryVo(HttpServletRequest request, String param) {
+	public HistoryVo(HttpServletRequest request, String param, User userId) {
 		super();
-		User userId = (User) request.getSession().getAttribute("user");
 		this.url = request.getRequestURI();
 		this.operatorId = userId.getUsername();
 		this.operatorIp = request.getRemoteAddr();

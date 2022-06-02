@@ -11,6 +11,8 @@ import com.barunsw.springbootdemo.vo.UserVo;
 public interface UserDao {
 	List<UserVo> selectAllUseList();
 
+	int selectDev1andAdmin(GroupMappingVo user);
+
 	List<UserVo> selectAuthUserList(int groupId);
 
 	List<UserVo> selectDenyUserList(int groupId);

@@ -1,13 +1,17 @@
 package com.barunsw.springbootdemo.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.barunsw.springbootdemo.controller.LoginController;
 import com.barunsw.springbootdemo.dao.LoginDao;
 import com.barunsw.springbootdemo.vo.UserVo;
 
 @Service
 public class LoginService {
+	private static final Logger log = LoggerFactory.getLogger(LoginService.class);
 
 	@Autowired
 	private LoginDao loginDao;

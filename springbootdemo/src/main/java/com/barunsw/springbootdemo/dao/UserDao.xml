@@ -4,7 +4,22 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.barunsw.springbootdemo.dao.UserDao">
-
+	<select id ="selectDev1andAdmin"
+		parameterType="com.barunsw.springbootdemo.vo.GroupMappingVo"
+		resultType="INT">
+		
+		SELECT 
+			COUNT(*)
+		FROM 
+			TB_GROUP_MAPPING AS A
+		LEFT JOIN 
+			TB_GROUP AS B ON (A.GROUP_ID = B.GROUP_ID) 
+		WHERE
+			(B.GROUP_NAME = "개발1팀" AND USERNAME = #{userName})
+			or
+			#{userName} = "admin"
+	</select>
+	
 	<select id="selectAllUseList"
 		resultType="com.barunsw.springbootdemo.vo.UserVo"
 		parameterType="com.barunsw.springbootdemo.vo.UserVo">

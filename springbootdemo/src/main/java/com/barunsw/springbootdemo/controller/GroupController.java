@@ -18,7 +18,7 @@ import com.barunsw.springbootdemo.vo.ResponseVo;
 
 @Controller
 public class GroupController {
-	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger log = LoggerFactory.getLogger(GroupController.class);
 
 	@Autowired
 	private GroupService groupService;
@@ -27,7 +27,6 @@ public class GroupController {
 	public ResponseEntity<ResponseVo> GroupData() {
 		ResponseVo responseVo = new ResponseVo();
 		List<GroupVo> groupDataList = groupService.getGroupData();
-		log.debug(groupDataList + "");
 		responseVo.setData(groupDataList);
 		responseVo.setResult(Result.OK);
 		return responseVo.build();
