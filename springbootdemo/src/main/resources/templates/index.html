@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:replace="common/header :: fragment-header"></div>
 <body>
 	<div id="wrap">
-		<div id="head">header area</div>
+		<div id="head">
+			BarunSW OJT
+			<p />
+			<div align="right" style="margin-right: 10px">
+				<span align="right" th:text="${#authentication.name}"></span>
+				<span>님 안녕하세요!</span> 
+				<input align="right" type="button" id="logout" name="logout" value="Logout" />
+			</div>
+		</div>
 		<div class="left_tree" th:insert="common/menu :: fragment-tree"></div>
 		<div id="content" th:insert="${callpage} :: content-view"></div>
 	</div>

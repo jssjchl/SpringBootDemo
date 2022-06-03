@@ -40,7 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		  .formLogin() //Authentication API
 		  .loginPage("/login/login")
 		  .loginProcessingUrl("/login/loginCheck")
-		  .successHandler(new MyLoginSuccessHandler());
+		  .successHandler(new MyLoginSuccessHandler())
+		  .and()
+		  .logout()
+		  .logoutUrl("/logout/logout")
+          .logoutSuccessUrl("/login/login")        
+          .invalidateHttpSession(true).deleteCookies("JSESSIONID");
 	}
 	
     @Override
